@@ -17,15 +17,16 @@ export function AsideMenuCard({playlist, currentPlaylist, isPlaying, currentItem
         >
             <picture className="h-12 w-13 flex-none relative ">
                 <img src={cover} alt={`cover of ${title} by ${artists.join(", ")}`} className="w-full h-full object-cover rounded-md" />
-                <button 
-                    className={`side-card-button absolute top-0 bg-[#1117] opacity-0 h-12 w-13 flex justify-center items-center group-hover/link:opacity-100 transition-all duration-150`} 
-                    onClick={(e) => {
-                        e.preventDefault()
-                        handlePause(id)
-                    }
-                }>
-                    {isPlaying && currentPlaylist?.id === id ? <Pause className="text-white" /> : <Play className="text-white"/>}
-                </button>
+                {playlist.songs.length > 0 &&  <button 
+                        className={`side-card-button absolute top-0 bg-[#1117] opacity-0 h-12 w-13 flex justify-center items-center group-hover/link:opacity-100 transition-all duration-150`} 
+                        onClick={(e) => {
+                            e.preventDefault()
+                            handlePause(id)
+                        }
+                    }>
+                        {isPlaying && currentPlaylist?.id === id ? <Pause className="text-white" /> : <Play className="text-white"/>}
+                    </button>
+                }
             </picture>
             <div className="flex flex-auto items-center">
                 <div className="flex flex-auto flex-col truncate">
