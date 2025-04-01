@@ -1,0 +1,10 @@
+---
+import { catalog } from "@/data/catalog"
+import CategoryCardItem from "../common/CategoryCardItem.astro"
+---
+<section class="p-4 pt-16">
+    <h1 class="text-2xl text-white font-extrabold mb-4">Explorar todo</h1>
+    <article class="grid grid-cols-2 gap-4 md:grid-cols-3 lg:grid-cols-4 lg:gap-6">
+        {catalog.map((catalogItem) => <CategoryCardItem item={catalogItem} />)}
+    </article>
+</section>
