@@ -1,0 +1,76 @@
+---
+// import data
+import { albums } from "@/data/albums"
+import { artists } from "@/data/artists"
+import { songs } from "@/data/songs"
+
+// import components
+import Layout from "@/layouts/Layout.astro"
+import RecommendedSongs from "@/components/track/RecommendedSongs.astro"
+import TrackBanner from "@/components/track/TrackBanner.astro"
+import PopularSongs from "@/components/track/PopularSongs.astro"
+import OtherArtists from "@/components/artist/OtherArtists.astro"
+import FromTheAlbum from "@/components/track/FromTheAlbum.astro"
+import FromTheArtist from "@/components/track/FromTheArtist.astro"
+import PreFooter from "@/components/common/PreFooter.astro"
+import { SinglePlaySong } from "@/components/common/SinglePlayButton"
+import StickyBtn from "@/components/common/StickyBtn.astro"
+import Gradient from "@/components/common/Gradient.astro"
+
+const {id} = Astro.params
+
+let artistSongs;
+let popularSongs;
+let recommendedSongs;
+const song = songs.find((s) => s.id === Number(id))
+const artist = artists.find((a) => a.name === song?.artists[0])
+const album = albums.find((a) => a.id === song?.albumId)
+const albumSongs = songs.filter((s) => s.albumId === album?.id)
+recommendedSongs = songs.slice(0, 5)
+
+if (artist){
+    artistSongs = songs.filter((s) => s.artists.includes(artist?.name))
+    popularSongs = artistSongs.toSorted((a, b) => Number(b.streams?.replace(/,/g, '')) - Number(a.streams?.replace(/,/g, ''))).slice(0, 5)
+    recommendedSongs = songs.filter((s) => !s.artists.includes(artist?.name)).slice(0, 5)
+}
+const otherArtists = artists.filter((art) => art.id !== artist?.id).slice(0,6)
+---
+
+<Layout title={`${song?.title} | Spotify`}>
+	<div
+		id="playlist-container" 
+		class="relative flex flex-col h-full overflow-x-hidden bg-zinc-900"
+         transition:name=`playlist ${id} box`
+    >   
+
+        {song && 
+            <StickyBtn title={song.title} bgColor={album?.color.dark}> 
+                <SinglePlaySong song={song} className={'bg-green-500 hover:scale-105  rounded-full  hover:bg-green-400'} client:visible  />
+            </StickyBtn>
+        }
+
+        {!song && <h1 class="text-white text-5xl font-bold text-center mt-10">Canción no Encontrada</h1>}
+
+        {(song && artist && album) && <TrackBanner song={song} artistName={artist.name} artistCover={artist.cover} albumTitle={album.title} />}
+
+        {song && 
+            <div class="flex p-4 pb-0">
+                <SinglePlaySong song={song} className={'bg-green-500 hover:scale-105 rounded-full  hover:bg-green-400'} client:visible  />
+            </div>
+        }
+
+        {artist && <FromTheArtist artist={artist} />}
+
+        {recommendedSongs && <RecommendedSongs recommendedSongs={recommendedSongs} />}
+
+        {(artist && popularSongs) && <PopularSongs popularSongs={popularSongs} artistName={artist.name} />}
+
+        {otherArtists.length > 0 && <OtherArtists otherArtists={otherArtists} />}
+
+        {album && <FromTheAlbum albumSongs={albumSongs} album={album} />}
+
+        {album?.color && <Gradient accentColor={album.color.accent} darkColor={album.color.dark} />}
+        
+        <PreFooter/>    
+    </div>
+</Layou>
