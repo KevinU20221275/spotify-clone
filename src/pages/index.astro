@@ -49,4 +49,46 @@ const filteredAlbums = albums.filter((album) => !myPlaylistId.includes(album.id)
 	</div>
 </Layout>
 
+<script>
+	const addBg = () => {
+		const playlistItems = document.querySelectorAll('.playlist-item');
+		const playlistContainer = document.getElementById('playlist-container');
+		let isHovering = false
 
+		if (!playlistContainer) return
+
+		playlistContainer.style.transition = "background 0.5s ease";
+
+		playlistItems.forEach((item) => {
+			item.addEventListener('mouseover', (e) => {
+				const target = (e.target as Element).closest('.playlist-item');
+				if (target) {
+					const color = target.getAttribute('color');
+					playlistContainer?.classList.remove('bg-zinc-800');
+					playlistContainer.style.background = `linear-gradient(180deg, ${color} 0%, ${color} 4%, #000 30%, #000 100%)`;
+
+					isHovering = true;
+				}
+			});
+
+			item.addEventListener('mouseleave', () => {
+				// Cuando el mouse sale de un item, se mantiene el hover activado hasta que todos los items tengan el mouse fuera
+				isHovering = false;
+				
+				// Verifica si el mouse ya ha salido de todos los items
+				setTimeout(() => {
+					if (!isHovering) {
+					playlistContainer.style.background = ""; 
+					playlistContainer?.classList.add('bg-zinc-800');
+					}
+				}, 150); // Un pequeño retraso para asegurarse de que el mouse realmente ha salido
+			});
+		});
+	};
+
+	// Ejecutar en la carga de la página
+	document.addEventListener('DOMContentLoaded', addBg);
+	
+	// Ejecutar cuando Astro realiza un "swap" de la página
+	document.addEventListener('astro:after-swap', addBg);
+</script>
