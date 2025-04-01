@@ -1,0 +1,30 @@
+---
+// import type
+import type { Artist } from '@/data/artists'
+
+// import icon component
+import VerifiedIcon from '@/icons/Verified.astro'
+
+interface Props {
+    artist: Artist
+}
+
+const { artist } = Astro.props
+const hasBanner = artist.banner
+---
+
+<header style={`background: linear-gradient(0deg, rgba(0,0,0,0.3), rgba(0,0,0,0.3)), url(${hasBanner});`} class={`px-6 ${!hasBanner ? 'min-h-52 md:min-h-60' : 'min-h-72'}`}>
+    <div class=`flex ${hasBanner ? 'flex-col' : 'items-center'} gap-2 py-4 h-full`>
+        {!hasBanner && 
+            <picture class="relative md:w-44 md:h-44 w-32 h-32 rounded-full overflow-hidden">
+                <img src={artist?.cover} alt={`image of ${artist.name} artist`} class="w-full object-cover" />
+            </picture>
+        }
+        <div class={`flex flex-col gap-2 ${hasBanner ? 'justify-start h-full' : ''}`}>
+            {artist?.isVerified && <p class="flex flex-1 text-white items-end text-sm"><VerifiedIcon/>  Artista verificado</p>}
+            <h1 class="text-white md:text-7xl text-3xl font-extrabold block">
+                {artist.name}
+            </h1>
+        </div>
+    </div>
+</header>
