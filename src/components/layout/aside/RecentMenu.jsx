@@ -5,6 +5,8 @@ import { GridIcon } from "@/icons/GridIcon";
 import { Slider } from "@/components/common/Slider";
 import { Check } from "@/icons/CheckReact";
 
+import { CONTAINER_STYLE } from "@/constants/constants";
+
 export function RecentMenu ({containerListStyle, setContainerStyle, setGridColsNumber}){
     const [isOpen, setIsOpen] = useState(false)
     const [sliderValue, setSliderValue] = useState(0)
@@ -36,13 +38,17 @@ export function RecentMenu ({containerListStyle, setContainerStyle, setGridColsN
         }
     };
 
+    const isListStyle = containerListStyle === CONTAINER_STYLE.LIST
+    const isCompactListStyle = containerListStyle === CONTAINER_STYLE.COMPACT_LIST
+    const isGridStyle = containerListStyle === CONTAINER_STYLE.GRID
+
     return (
         <div className="relative recentMenu" ref={menuRef}>
             <button
                 onClick={() => setIsOpen(!isOpen)}
                 className="flex gap-1 justify-between items-center text-zinc-400 text-sm cursor-pointer"
             >
-                Recientes {containerListStyle === 'list' ?  <ListIcon className="w-6 h-6" /> : containerListStyle === 'compact-list' ? <CompactListIcon className={'w-4 h-4'}/> : <GridIcon className={'w-4 h-4'}/>}
+                Recientes {isListStyle ?  <ListIcon className="w-6 h-6" /> : isCompactListStyle ? <CompactListIcon className={'w-4 h-4'}/> : <GridIcon className={'w-4 h-4'}/>}
             </button>
 
             {isOpen && (
@@ -51,34 +57,34 @@ export function RecentMenu ({containerListStyle, setContainerStyle, setGridColsN
                     <li>
                         <button 
                         onClick={() => setContainerStyle('compact-list')}
-                        className={`flex gap-2 items-center justify-between p-2 py-3 rounded-md w-full hover:bg-zinc-700 ${containerListStyle === 'compact-list' && 'text-green-600'}`}>
+                        className={`flex gap-2 items-center justify-between p-2 py-3 rounded-md w-full hover:bg-zinc-700 ${isCompactListStyle && 'text-green-600'}`}>
                             <span className="flex gap-2 items-center pl-[2px]">
                                 <CompactListIcon className={'w-5 h-5'}/> Compacta
                             </span>
-                            {containerListStyle === 'compact-list' && <Check className={'w-5 h-5 text-green-500'}/>}
+                            {isCompactListStyle && <Check className={'w-5 h-5 text-green-500'}/>}
                         </button>
                     </li>
                     <li>
                         <button 
                         onClick={() => setContainerStyle('list')}
-                        className={`flex gap-2 items-center justify-between p-2 py-2.5 rounded-md w-full hover:bg-zinc-700 ${containerListStyle === 'list' && 'text-green-600'}`}>
+                        className={`flex gap-2 items-center justify-between p-2 py-2.5 rounded-md w-full hover:bg-zinc-700 ${isListStyle && 'text-green-600'}`}>
                             <span className="flex gap-2 items-center">
                                 <ListIcon className={'w-6 h-6'}/> Lista
                             </span>
-                            {containerListStyle === 'list' && <Check className={'w-5 h-5 text-green-500'} />}
+                            {isListStyle && <Check className={'w-5 h-5 text-green-500'} />}
                         </button>
                     </li>
                     <li>
                         <button 
                         onClick={() => setContainerStyle('grid')}
-                        className={`flex gap-2 items-center justify-between p-2 py-2.5 rounded-md w-full hover:bg-zinc-700 ${containerListStyle === 'grid' && 'text-green-600'}`}>
+                        className={`flex gap-2 items-center justify-between p-2 py-2.5 rounded-md w-full hover:bg-zinc-700 ${isGridStyle && 'text-green-600'}`}>
                             <span className="flex gap-2 items-center pl-1">
                                 <GridIcon className={'w-4 h-4'}/> Cuadricula
                             </span>
-                            {containerListStyle === 'grid' && <Check className={'w-5 h-5 text-green-500'} />}
+                            {isGridStyle && <Check className={'w-5 h-5 text-green-500'} />}
                         </button>
                     </li>
-                    {containerListStyle === 'grid' && 
+                    {isGridStyle && 
                     <li className="py-4 px-3">
                         <Slider
                             defaultValue={[100]}

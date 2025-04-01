@@ -1,5 +1,5 @@
 import { CloseIcon } from "@/icons/CloseIcon";
-import { PLAYLISTS_FILTERS } from "@/hooks/usePlaylistFilters";
+import { PLAYLISTS_FILTERS } from "@/constants/constants";
 
 export function FilterPlaylistsButtons({filterPlaylistsBtn, changeFilter, myPlaylists}){
     

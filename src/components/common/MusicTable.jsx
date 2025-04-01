@@ -5,6 +5,9 @@ import { useEffect, useState } from "react";
 import { PlayingIndicator } from "@/components/common/PlayingIndicator";
 import { DeleteIcon } from "@/icons/Delete";
 
+// import constant
+import { PLAYLISTS_TYPES } from "@/constants/constants";
+
 export function MusicTable({ songs, playlistInfo, tableType="Playlist", removeSong = null }) {
     const currentSong = usePlayerStore(state => state.currentMusic.song);
     const setCurrentMusic = usePlayerStore(state => state.setCurrentMusic);
@@ -44,26 +47,26 @@ export function MusicTable({ songs, playlistInfo, tableType="Playlist", removeSo
         }
     },[currentSong])
 
-    
+    const isArtistPlaylist = playlistInfo.type === PLAYLISTS_TYPES.ARTIST_PLAYLIST
 
     return (
         <>
-            {playlistInfo.type === "Artist_Playlist" && <h2 className="text-xl text-white font-bold my-4 pl-4" >Popular</h2>}
-            <table className={`table-auto text-left min-w-full ${playlistInfo.type !== "Artist_Playlist" && 'divide-y'} divide-gray-500/20`}>
+            {isArtistPlaylist && <h2 className="text-xl text-white font-bold my-4 pl-4" >Popular</h2>}
+            <table className={`table-auto text-left min-w-full ${!isArtistPlaylist && 'divide-y'} divide-gray-500/20`}>
                 <thead>
-                    {playlistInfo.type !== "Artist_Playlist" && (
+                    {!isArtistPlaylist && (
 
                         <tr className="text-zinc-400 text-sm font-light">
                             <th className="px-4 py-2 font-light w-8">#</th>
                             <th className="px-4 py-2 font-light">Título</th>
-                            <th className="px-4 py-2 font-light hidden md:table-cell">{tableType === "Playlist" ? "Álbum" : ""}</th>
+                            <th className="px-4 py-2 font-light hidden md:table-cell">{tableType === PLAYLISTS_TYPES.PLAYLIST ? "Álbum" : ""}</th>
                             <th className="px-4 py-2 font-light"><TimeIcon/></th>
                         </tr>
                     )}  
                 </thead>
 
                 <tbody>
-                    {playlistInfo.type !== "Artist_Playlist" && <tr className="h-14"></tr>}
+                    {!isArtistPlaylist && <tr className="h-14"></tr>}
                     {songs.map((song,index) => (
                         <tr className={`${fadeOut === song.id && 'fadeOut'}  ${currentRow === song.id ? 'bg-[#5A5A5A]' : 'hover:bg-white/10' } text-gray-300 text-sm font-light rounded-lg overflow-hidden group`} onClick={() => handleClickCurrentRow(song.id)} key={song.id}>
                             <td className="px-4 py-2 rounded-tl-lg rounded-bl-lg w-8">
@@ -95,7 +98,7 @@ export function MusicTable({ songs, playlistInfo, tableType="Playlist", removeSo
                             </td>
                             <td className="px-4 py-2 hidden md:table-cell">
                                 <span>
-                                    {tableType === "Artist_Playlist" ? song.streams : tableType === "Playlist" ?  song.album : "" }
+                                    {tableType === PLAYLISTS_TYPES.ARTIST_PLAYLIST ? song.streams : tableType === PLAYLISTS_TYPES.PLAYLIST ?  song.album : "" }
                                 </span>
                             </td>
                             <td className="px-4 py-0 rounded-tr-lg rounded-br-lg">
