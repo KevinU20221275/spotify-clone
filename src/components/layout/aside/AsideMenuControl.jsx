@@ -6,7 +6,7 @@ import { navigate } from "astro:transitions/client"
 import { usePlayerStore } from "@/store/playerStore";
 import { AsideSkeleton } from "@/components/skeletons/AsideItemsSkeletons";
 import { RecentMenu } from "./RecentMenu";
-import { AsideWithoutPlaylist } from "./AsideWithoutPlaylist ";
+import { AsideWithoutPlaylist } from "./AsideWithoutPlaylist";
 import { getMyPlaylist, createPlaylist } from "@/services/playlist";
 import { usePlaylistsFilters} from "@/hooks/usePlaylistFilters"
 import { useAsideView } from "@/hooks/useAsideView";
@@ -18,11 +18,17 @@ export function AsideMenuControl(){
     const [myPlaylists, setMyPlaylist] = useState([])
     const [searchPlaylist,setSearchPlaylist] = useState('')
     const [isLoading, setIsLoading] = useState(true)
+
+    // this two states are used to detect when user added or removed one playlist from other components
     const myPlaylistsLocalState = usePlayerStore(state => state.myPlaylists)
     const loadMyPlaylist = usePlayerStore(state => state.loadMyPlaylist)
+
+    // filters
     const { filterPlaylistsBtn, changeFilter } = usePlaylistsFilters()
-    const { gridColsNumber, setGridColsNumber, listContainerStyle, setListContainerSlyle } = useAsideView()
     const { filteredPlaylists } = useFilterPlaylists(myPlaylists, searchPlaylist, filterPlaylistsBtn)
+    
+    // change aside playlist cards view
+    const { gridColsNumber, setGridColsNumber, listContainerStyle, setListContainerSlyle } = useAsideView()
 
     useEffect(() => {   
         getMyPlaylist().then((myListOfPlaylists) => {
