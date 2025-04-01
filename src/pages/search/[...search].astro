@@ -1,0 +1,49 @@
+---
+// import types
+import { songs, type Song } from "@/data/songs"
+
+// import data
+import { albums } from "@/data/albums"
+import { playlists, myPlaylists } from "@/data/playlist"
+import { artists } from "@/data/artists"
+
+// import components
+import Layout from "@/layouts/Layout.astro"
+import Catalog from "@/components/SearchPage/Catalog.astro"
+import MostRelevant from "@/components/SearchPage/MostRelevant.astro"
+import ArtistsFound from "@/components/SearchPage/ArtistsFound.astro"
+import AlbumensFound from "@/components/SearchPage/AlbumensFound.astro"
+import PlaylistsFound from "@/components/SearchPage/PlaylistsFound.astro"
+import PreFooter from "@/components/common/PreFooter.astro"
+
+interface Props {
+    search? : string
+}
+
+const {search} = Astro.params
+
+const albumsFiltered = albums.filter((a) => a.title.toLocaleLowerCase().includes(search?.toLocaleLowerCase()))
+const myPlaylistsId = myPlaylists.map((a) => a.id)
+const playlistsFiltered = playlists.filter((a) => a.title.toLocaleLowerCase().includes(search?.toLocaleLowerCase()) && !myPlaylistsId?.includes(a.id))
+const filteredArtists = artists.filter((a) => a.name.toLocaleLowerCase().includes(search?.toLocaleLowerCase()))
+const songsFiltered : Song[] = songs.filter((s) => s.title.toLocaleLowerCase().includes(search?.toLocaleLowerCase()))
+const firstSong = songsFiltered[0]
+const nextSongs = songsFiltered.slice(1,5)
+
+const mostRelevantResult = firstSong || albumsFiltered[0] || playlistsFiltered[0] || filteredArtists[0]
+---
+<Layout title="Spotify - Buscar">
+    <div class="p-4 flex flex-col gap-8">
+        {search ? (
+            <MostRelevant search={search} mostRelevantResult={mostRelevantResult} nextSongs={nextSongs} />
+        ) : <Catalog/>}
+
+        {filteredArtists.length > 0 && <ArtistsFound filteredArtists={filteredArtists} />}
+    
+        {albumsFiltered.length > 0 && <AlbumensFound albumsFiltered={albumsFiltered} />}
+    
+        {playlistsFiltered.length > 0 && <PlaylistsFound playlistsFiltered={playlistsFiltered} />}
+    </div>
+
+    <PreFooter/>
+</Layout>
