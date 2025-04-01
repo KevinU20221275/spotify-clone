@@ -1,0 +1,173 @@
+---
+// import components
+import Layout from "@/layouts/Layout.astro";
+import PreFooter from "@/components/common/PreFooter.astro";
+
+// import icons
+import CheckIcon from "@/icons/Check.astro";
+import CheckTableIcon from "@/icons/CheckTable.astro"
+import SpotifyIcon from "@/icons/SpotifyCardIcon.astro"
+---
+
+<Layout title="Spotify - Premium">
+    <header class="flex justify-center gap-8 py-12 px-8 items-center flex-col text-zinc-50 text-center bg-gradient-to-r from-[#880F60] to-[#143070]">
+        <div>
+            <h2 class="text-3xl font-bold max-w-xl text-white">Escucha sin limites. Prueba 1 mes de Premium Individual gratis</h2>
+            <h5 class="text-lg">Despues, solo cuesta USD 5.99por mes. Cancela cuando quieras.</h5>
+        </div>
+
+        <div class="flex justify-between items-center gap-4">
+            <button class="bg-zinc-100 text-black font-semibold px-8 py-3 rounded-full hover:scale-105 hover:bg-zinc-200 cursor-pointer border-[1px] border-zinc-50">Empezar</button>
+            <button class="bg-transparent px-8 py-3 rounded-full border-[1px] border-zinc-100 font-semibold hover:scale-105 cursor-pointer">Ver todos los planes</button>
+        </div>
+        <h6 class="text-xs">Gratis por 1 mes. Despues, cuesta USD 5.99 al mes. La oferta solo esta disponible si aun no probaste Premium. <span class="underline">Se aplican Terminos</span></h6>
+    </header>
+    <section class="text-zinc-50 text-center p-10">
+        <h3 class="text-3xl font-bold text-white">Planes accesibles para cada situacion</h3>
+        <p class="mt-2">
+            Elige un plan Premium y escucha música sin anuncios y sin límites en tu teléfono, altavoz y otros dispositivos. Accede a varias formas de pago. Cancela cuando quieras.
+        </p>
+        <picture class="inline-block mt-6">
+            <img src="/metodosPago.png" alt="metodos de pago">
+        </picture>
+    </section>
+    <section class="flex justify-center items-center flex-wrap gap-3 text-center px-10 text-zinc-200">
+        <div class="max-w-96">
+            <h3 class="text-white font-bold text-3xl">Todos los planes Pemium incluyen lo siguiente:</h3>
+        </div>
+        <ul class="text-start">
+            <li class="flex">
+                <CheckIcon/> Escucha música sin anuncios
+            </li>
+            <li class="flex">
+                <CheckIcon/> Descarga contenido para escuchar en modo offline
+            </li>
+            <li class="flex">
+                <CheckIcon/> Reproduce canciones en el orden que quieras
+            </li>
+            <li class="flex">
+                <CheckIcon/> Disfruta de audio de alta calidad
+            </li>
+            <li class="flex">
+                <CheckIcon/> Escucha contenido con tus personas favoritas en tiempo real
+            </li>
+            <li class="flex">
+                <CheckIcon/> Organiza la fila de reproducción
+            </li>
+        </ul>
+    </section>
+    <section class="flex flex-wrap gap-8 justify-center items-center p-10 max-w-4xl mx-auto">
+        <div class="relative text-zinc-100 bg-zinc-800 p-3 w-[330px] rounded-md flex flex-col gap-3 h-[405px]">
+            <span class="bg-[#FFD2D7] inline-block absolute top-0 left-0 px-4 py-2 text-black font-bold rounded-br-md rounded-tl-md">Gratis por 1 mes</span>
+            <span class="font-bold text-white flex items-center gap-1 mt-12">
+                <SpotifyIcon /> Premium
+            </span>
+            <h4 class="text-[#FFD2D7] text-3xl font-bold">Individual</h4>
+
+            <div>
+                <p class="text-white">Gratis por 1 mes</p>
+                <p class="text-zinc-400">Después, USD 5.99 por mes</p>
+            </div>
+            <div class="h-[1px] w-full bg-zinc-700"></div>
+            <ul class="list-disc flex flex-col px-4">
+                <li>1 cuenta Premium</li>
+                <li>Cancela cuando quieras</li>
+            </ul>
+            <button class="bg-[#FFD2D7] px-8 py-3 rounded-full text-black font-bold hover:bg-[#FFE5E8] cursor-pointer">Probar Spotify gratis por 1 mes</button>
+            <p class="text-xs text-zinc-300 text-center">
+                Gratis por 1 mes. Después, cuesta USD 5.99 al mes. La oferta solo está disponible si aún no probaste Premium. <span class="underline">Se aplican Términos.</span>
+            </p>
+        </div>
+
+        <div class="relative text-zinc-100 bg-zinc-800 p-3 w-[330px] rounded-md flex flex-col gap-4 h-[405px]">
+            <span class="font-bold text-white flex items-center gap-1 mt-12">
+                <SpotifyIcon /> Premium
+            </span>
+            <h4 class="text-[#FFC862] text-3xl font-bold">Duo</h4>
+
+            <div>
+                <p class="text-white">USD 7.99 al mes</p>
+                <p class="text-zinc-400"></p>
+            </div>
+            <div class="h-[1px] w-full bg-zinc-700"></div>
+            <ul class="list-disc flex flex-col px-4">
+                <li>2 cuenta Premium</li>
+                <li>Cancela cuando quieras</li>
+            </ul>
+            <button class="bg-[#FFC862] px-8 py-3 rounded-full text-black font-bold hover:bg-[#FFD994] cursor-pointer">Obtener Premium Duo</button>
+            <p class="text-xs text-zinc-300 text-center">
+                Para parejas que vivan en el mismo domicilio. <span class="underline">Se aplican Términos.</span>
+            </p>
+        </div>
+
+        <div class="relative text-zinc-100 bg-zinc-800 p-3 w-[330px] rounded-md flex flex-col gap-3 h-[405px]">
+            <span class="font-bold text-white flex items-center gap-1 mt-12">
+                <SpotifyIcon /> Premium
+            </span>
+            <h4 class="text-[#A5BBD1] text-3xl font-bold">Familiar</h4>
+
+            <div>
+                <p class="text-white">USD 10.99 al mes</p>
+                <p class="text-zinc-400"></p>
+            </div>
+            <div class="h-[1px] w-full bg-zinc-700"></div>
+            <ul class="list-disc flex flex-col px-4">
+                <li>Hasta 6 cuentas Premium</li>
+                <li>Controa el contenido explícito</li>
+                <li>Cancela cuando quieras</li>
+            </ul>
+            <button class="bg-[#A5BBD1] px-8 py-3 rounded-full text-black font-bold hover:bg-[#B5C7D9] cursor-pointer">Obtener Premium Familiar</button>
+            <p class="text-xs text-zinc-300 text-center">
+                Para hasta 6 miembros de tu familia que vivan en el mismo domicilio <span class="underline">Se aplican Términos.</span>
+            </p>
+        </div>
+    </section>
+    <section class="text-zinc-100 flex flex-col gap-4">
+        <article class="max-w-2xl mx-auto flex flex-col gap-2 py-10 px-">
+            <h4 class="text-3xl font-bold text-white text-center">Nota la diferencia</h4>
+            <h6 class="text-center text-lg">Cambiate a Premuim y disfruta del control total de tu música. Cancela cuando quieras.</h6>
+        </article>
+        <table class="table-auto w-[550px] mx-auto">
+            <thead>
+                <tr class="border-b border-zinc-50">
+                    <th class="flex items-end h-30 pl-2 py-2">Beneficios</th>
+                    <th class="h-30 w-38 px-2">Servicio gratuito de Spotify</th>
+                    <th class="bg-gradient-to-b from-[#252122] to-[#121212] h-30 w-34"><span class="flex items-center justify-center gap-2"><SpotifyIcon/> Premium</span></th>
+                </tr>
+            </thead> 
+            <tbody>
+                <tr class="hover:bg-white/10 group transition-all border-b border-zinc-50">
+                    <td class="pl-2 underline decoration-dashed decoration-1 decoration-zinc-500 group-hover:decoration-zinc-200 underline-offset-4">Escucha música sin anuncios</td>
+                    <td class="text-5xl text-center font-extralight">-</td>
+                    <td class="flex justify-center items-center h-16 bg-zinc-800 group-hover:bg-white/20"><CheckTableIcon/></td>
+                </tr>
+                <tr class="hover:bg-white/10 group transition-all border-b border-zinc-50">
+                    <td class="pl-2 underline decoration-dashed decoration-1 decoration-zinc-500 group-hover:decoration-zinc-200 underline-offset-4">Descarga de canciones</td>
+                    <td class="text-5xl text-center font-extralight">-</td>
+                    <td class="flex justify-center items-center h-16 bg-zinc-800 group-hover:bg-white/20"><CheckTableIcon/></td>
+                </tr>
+                <tr class="hover:bg-white/10 group transition-all border-b border-zinc-50">
+                    <td class="pl-2 underline decoration-dashed decoration-1 decoration-zinc-500 group-hover:decoration-zinc-200 underline-offset-4">Reproduce canciones en el orden que quieras</td>
+                    <td class="text-5xl text-center font-extralight">-</td>
+                    <td class="flex justify-center items-center h-16 bg-zinc-800 group-hover:bg-white/20"><CheckTableIcon/></td>
+                </tr>
+                <tr class="hover:bg-white/10 group transition-all border-b border-zinc-50">
+                    <td class="pl-2 underline decoration-dashed decoration-1 decoration-zinc-500 group-hover:decoration-zinc-200 underline-offset-4">Audio de alta calidad</td>
+                    <td class="text-5xl text-center font-extralight">-</td>
+                    <td class="flex justify-center items-center h-16 bg-zinc-800 group-hover:bg-white/20"><CheckTableIcon/></td>
+                </tr>
+                <tr class="hover:bg-white/10 group transition-all border-b border-zinc-50">
+                    <td class="pl-2 underline decoration-dashed decoration-1 decoration-zinc-500 group-hover:decoration-zinc-200 underline-offset-4">Escucha contenido con tus personas favoritas en tiempo real</td>
+                    <td class="text-5xl text-center font-extralight">-</td>
+                    <td class="flex justify-center items-center h-16 bg-zinc-800 group-hover:bg-white/20"><CheckTableIcon/></td>
+                </tr>
+                <tr class="hover:bg-white/10 group transition-all border-b border-zinc-50">
+                    <td class="pl-2 underline decoration-dashed decoration-1 decoration-zinc-500 group-hover:decoration-zinc-200 underline-offset-4">Organiza la fila de reproducción</td>
+                    <td class="text-5xl text-center font-extralight">-</td>
+                    <td class="flex justify-center items-center h-16 bg-zinc-800 group-hover:bg-white/20"><CheckTableIcon/></td>
+                </tr>
+            </tbody>
+        </table>
+    </section>
+    <PreFooter/>
+</Layout>
