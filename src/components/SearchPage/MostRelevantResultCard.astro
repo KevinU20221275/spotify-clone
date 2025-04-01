@@ -5,32 +5,33 @@ import type { Artist } from '@/data/artists'
 import type { Song } from '@/data/songs'
 import { CardPlayButton } from '../common/CardPlayButton'
 import type { Playlist } from '@/data/playlist'
-import { undefined } from 'astro:schema'
 
 interface Props {
     mostRelevantResult: Song | Album | Artist | Playlist
 }
 
+// type Guards
+const isArtist = (item: any) : item is Artist => item.type == 'Artist';
+const isSong = (item: any) : item is Song => item.type == "Single";
+const isAlbum = (item: any) : item is Album => item.type == "Album";
+const isPlaylist = (item: any) : item is Playlist => item.type == "Playlist";
+
 const {mostRelevantResult} = Astro.props
 
-console.log(mostRelevantResult)
+const title = isArtist(mostRelevantResult) ? mostRelevantResult.name : mostRelevantResult.title
+const cover = isSong(mostRelevantResult) ? mostRelevantResult.image : mostRelevantResult.cover
+const artists = isArtist(mostRelevantResult) ? [mostRelevantResult.name] : mostRelevantResult.artists ?? []
+const id = isArtist(mostRelevantResult) && mostRelevantResult.playlists?.length ? mostRelevantResult.playlists[0] : mostRelevantResult.id
+const playlist = isArtist(mostRelevantResult) ? mostRelevantResult.playlists ?? [] : isAlbum(mostRelevantResult) || isPlaylist(mostRelevantResult) ? mostRelevantResult.songs ?? [] : [];
 
-const type = mostRelevantResult.type
-const title = type === "Artist" ? mostRelevantResult?.name : mostRelevantResult?.title
-const cover = type === "Single" ? mostRelevantResult.image : mostRelevantResult.cover
-const artists = type === "Artist" ? [mostRelevantResult.name] : mostRelevantResult.artists
-const id = (type === "Artist" && mostRelevantResult?.playlists !== undefined) ? mostRelevantResult?.playlists[0] :  mostRelevantResult.id
-const playlist = type === "Artist" 
-    ? mostRelevantResult?.playlists
-    : type === "Playlist" || type === "Artist_Playlist" || type === "Album" 
-    ? mostRelevantResult?.songs 
-    : []
+const imageStyle = isArtist(mostRelevantResult) ? "rounded-full" : "rounded-md";
 
-const imageStyle = type === "Artist" ? "rounded-full" : "rounded-md"
-const href = type === "Artist" 
+const href = isArtist(mostRelevantResult) 
     ? `/intl-es/artist/${mostRelevantResult.id}` 
-    : type === "Playlist" ? `/playlist/${id}` 
-    : type === "Album" ? `/intl-es/album/${id}` : `/intl-es/track/${id}`
+    : isPlaylist(mostRelevantResult) ? `/playlist/${id}` 
+    : isAlbum(mostRelevantResult) ? `/intl-es/album/${id}` 
+    : `/intl-es/track/${id}`
+
 ---
 
 <a href={href} class="relative flex flex-col gap-2 p-6 w-md rounded-md justify-center group bg-zinc-800 hover:bg-zinc-700">
@@ -41,16 +42,16 @@ const href = type === "Artist"
         <h1 class="text-3xl font-extrabold text-white">
             {title}
         </h1>
-        <p class="text-sm text-zinc-400">{type} • 
+        <p class="text-sm text-zinc-400">{mostRelevantResult.type} • 
             <span class="text-white">
                 {artists.join(', ')}    
             </span>
             <div class="absolute right-4 bottom-6 translate-y-4 transition-all duration-500 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 z-10">
-                {playlist?.length > 0 && type !== "Single" &&
+                {playlist?.length > 0 && !isSong(mostRelevantResult) &&
                     <CardPlayButton id={id} className={''} client:visible />
                 }
                 {
-                    type === "Single" && 
+                    isSong(mostRelevantResult) && 
                     <SinglePlaySong song={mostRelevantResult} className={'bg-green-500 hover:scale-105  rounded-full  hover:bg-green-400'} client:visible />
                 }
             </div>
