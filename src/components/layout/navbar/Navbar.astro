@@ -1,0 +1,49 @@
+---
+import HomeIcon from "@/icons/Home.astro"
+import SpotifyIcon from "@/icons/Spotify.astro"
+import {Search} from "@/components/layout/navbar/Search"
+import DownloadIcon from '@/icons/Download.astro'
+import BellIcon from "@/icons/Bell.astro"
+import { AddPlayList } from "@/components/playlist/AddPlaylist"  
+import UserMenu from "./UserMenu.astro"
+---
+
+<nav class="flex gap-8 lg:justify-between items-center">
+    <a href="/" class="font-medium ml-5 text-red">
+        <SpotifyIcon fill="#fff" />
+    </a>
+    <ul class="flex justify-between lg:gap-4 items-center h-[50px] py-2 w-full lg:w-auto">
+        <li class="flex justify-start gap-2 items-center xl:w-[550px]">
+            <a href="/" class="flex text-white hover:scale-105 hover:bg-zinc-800 bg-zinc-900 items-center p-3  rounded-full font-medium transition-all duration-300">
+                <HomeIcon></HomeIcon>
+            </a>
+            <Search client:load transition:name="search-input" transition:persist/>
+            <AddPlayList className={'flex gap-3 w-[48px] text-zinc-400 hover:bg-zinc-800 bg-zinc-900 p-3 rounded-full hover:text-white transition-all xl:hover:w-[100px] overflow-x-hidden cursor-pointer group duration-500'}  client:load />
+        </li>
+        <li>
+            <ul class="flex gap-2 lg:gap-4 justify-center items-center">
+                <li class="hidden lg:inline-block">
+                    <a href="/intl-es/premium" class="flex text-sm text-nowrap bg-zinc-100 px-3 py-[6px] rounded-full font-semibold text-black hover:scale-105 hover:bg-zinc-300">
+                        Explorar Premium
+                    </a>
+                </li>
+                <li>
+                    <a href="/download" class="flex gap-2 font-medium justify-center items-center text-sm text-zinc-400 hover:scale-105 hover:text-zinc-100 text-nowrap">
+                        <DownloadIcon/>
+                        Instalar aplicacion
+                    </a>
+                </li>
+                <li>
+                    <a href="/content-feed" class="flex text-zinc-400 hover:text-zinc-100 px-2">
+                        <BellIcon/>
+                    </a>
+                </li>
+                <li class="group">
+                   <UserMenu/>
+                </li>
+            </ul>
+        </li>
+    </ul>
+</nav>
+
+
