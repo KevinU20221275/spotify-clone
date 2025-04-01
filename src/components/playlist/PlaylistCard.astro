@@ -1,0 +1,29 @@
+---
+import type { Album } from "@/data/albums"
+import type { Playlist } from "@/data/playlist"
+import { CardPlayButton } from "../common/CardPlayButton" 
+import { PlayingIndicator } from "@/components/common/PlayingIndicator"
+
+interface Props {
+    playlist: Playlist | Album
+}
+const {playlist} = Astro.props
+const { id, cover, title, artists, color, type } = playlist
+const path = type === "Album" ? `/intl-es/album/${id}` : `/playlist/${id}`
+---
+<a href={path} 
+    color={color.accent}
+    class="playlist-item relative bg-white/20 flex justify-between items-center group rounded-md overflow-hidden pr-2 cursor-pointer max-h-[50px]"
+>
+    <div class="flex items-center gap-2">
+        <picture class="w-12 h-12 overflow-hidden aspect-square">
+            <img src={cover} alt={`image of ${title}`} class="object-cover h-full w-full"/>
+        </picture>
+        <h6 class="text-sm text-white truncate font-semibold">{title}</h6>
+    </div>
+    
+    <PlayingIndicator client:load currentPlaylistId={id} songId={null} />
+    <CardPlayButton client:load id={id} size="extra-small" className={'hidden group-hover:inline-block shadow-xl shadow-black'} />
+</a>
+
+
