@@ -1,0 +1,20 @@
+---
+// import type
+import type { Artist } from '@/data/artists'
+
+// import components
+import ArtistCard from '../artist/ArtistsCard.astro' 
+
+interface Props{
+    filteredArtists: Artist[]
+}
+
+const { filteredArtists } = Astro.props
+---
+
+<section>
+    <h4 class="text-2xl text-bold text-white">Artistas</h4>
+    <article class="flex flex-wrap mt-6 gap-4">
+        {filteredArtists.map((artist) => <ArtistCard artist={artist} />)}
+    </article>
+</section>
