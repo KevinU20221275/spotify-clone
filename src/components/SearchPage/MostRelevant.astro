@@ -1,0 +1,34 @@
+---
+import {  type Song } from '@/data/songs'
+import CardSearchSong from '../track/CardSearchSong.astro'
+import MostRelevantResultCard from './MostRelevantResultCard.astro'
+import {  type Album } from '@/data/albums'
+import {  type Artist } from '@/data/artists'
+import type { Playlist } from '@/data/playlist'
+interface Props{
+    mostRelevantResult: Song | Album | Artist | Playlist
+    nextSongs: Song[]
+    search: string
+}
+
+const {mostRelevantResult, nextSongs, search} = Astro.props
+
+
+
+---
+<section class="p-4">
+    <article class="flex flex-wrap gap-10" >
+        <div>
+            <h2 class="text-2xl text-white font-bold pb-4">{mostRelevantResult ? `Resultado mas relevante` : `No se encontraron coincidencias`}</h2>
+            {mostRelevantResult ? <MostRelevantResultCard mostRelevantResult={mostRelevantResult} /> : <p class="text-zinc-500">No se encontraron resultados para "{search}"</p>}
+        </div>
+        <div class="flex-auto">
+            <h2 class="text-2xl text-white font-bold pb-4">Canciones</h2>
+            <div class="flex flex-col justify-center">
+                {nextSongs.length > 0 
+                ? nextSongs.map((s) => <CardSearchSong s={s} />)
+                : <p class="text-zinc-500">No se encontraron coincidencias</p> }
+            </div>
+        </div>
+    </article>
+</section>
