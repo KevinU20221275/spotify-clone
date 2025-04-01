@@ -1,0 +1,52 @@
+---
+// import type
+import type { Playlist } from '@/data/playlist';
+
+// import data
+import { getAllPlaylists, myPlaylists } from '@/data/playlist';
+
+// import components
+import Layout from '@/layouts/Layout.astro';
+import PlaylistHero from '@/components/playlist/PlaylistHero.astro';
+import { CardPlayButton } from '@/components/common/CardPlayButton';
+import StickyBtn from '@/components/common/StickyBtn.astro';
+import { AddPlayList } from '@/components/playlist/AddPlaylist';
+import { RemovePlaylistBtn } from '@/components/playlist/RemovePlaylistBtn';
+import {SongsManager} from "@/components/player/SongsManager"
+import PreFooter from '@/components/common/PreFooter.astro';
+import Gradient from '@/components/common/Gradient.astro';
+
+const { id } = Astro.params
+const playlist : Playlist | undefined = getAllPlaylists().find(p => p.id === id && p.type === "Playlist")
+const isPlaylistInMyPlaylist = myPlaylists.some(p => p.id === playlist?.id)
+---
+
+<Layout title={`${playlist?.title} | Spotify`}>
+    <div
+        id="playlist-container" 
+        class="relative flex flex-col h-full overflow-x-hidden bg-zinc-900"
+        transition:name=`playlist ${id} box`
+    >   
+        {playlist && 
+            <StickyBtn title={playlist.title} bgColor={playlist.color.dark}>
+                <CardPlayButton id={playlist.id}  className={''} client:visible />
+            </StickyBtn>
+        }
+
+        {playlist && <PlaylistHero playlist={playlist} />}
+
+        {!playlist && <h1 class="text-white text-5xl font-bold text-center mt-10">Playlist no Encontrada</h1>}
+
+        <div class="pl-6 pt-6 flex gap-5 items-center">
+            {playlist  && <CardPlayButton id={id} size='large' className={''} client:visible />}
+            {(playlist && playlist?.createdBy !== "Spotify") && <RemovePlaylistBtn id={playlist.id} client:visible /> }
+            {(playlist && playlist.createdBy === "Spotify") && <AddPlayList playlist={playlist} isPlaylistInMyPlaylist={isPlaylistInMyPlaylist}  className={'w-8 h-8'} client:visible />}
+        </div>    
+            
+        {playlist && <SongsManager id={id} playlist={playlist} client:visible/>}
+        
+        {playlist?.color && <Gradient accentColor={playlist.color.accent} darkColor={playlist.color.dark} />}
+
+        <PreFooter/>
+    </div>
+</Layout>
