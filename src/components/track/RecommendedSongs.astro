@@ -1,0 +1,21 @@
+---
+// import type
+import type { Song } from '@/data/songs'
+
+// import components
+import CardSearchSong from './CardSearchSong.astro'
+
+interface Props {
+    recommendedSongs : Song[]
+}
+
+const { recommendedSongs } = Astro.props
+---
+
+<section class="p-4">
+    <h4 class="text-white font-extrabold text-2xl">Recomendaciones</h4>
+    <span class="text-sm text-zinc-500 inline-block">basadas en esta canción</span>
+    <article>
+        {recommendedSongs.map((s) => <CardSearchSong s={s} />)}
+    </article>
+</section>
