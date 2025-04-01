@@ -1,0 +1,27 @@
+---
+// import components
+import Layout from "@/layouts/Layout.astro";
+import Spotify from "@/icons/Spotify.astro";
+import PreFooter from "@/components/common/PreFooter.astro";
+---
+
+<Layout title="Spotify - Download">
+    <section class="px-10 pb-10 bg-gradient-to-b from-[#65AE99] to-[#F49ECF] overflow-hidden min-h-[78vh] rounded-2xl">
+        <article class="relative text-black p-10 grid grid-cols-1 xl:grid-cols-5 lg:pb-20 gap-5  bg-gradient-to-b from-[#F49ECF] to-[#65AE99]">
+            <div class="flex flex-col gap-8 justify-center items-start col-span-2">
+                <span class="flex gap-1 items-center font-bold text-xl">
+                    <Spotify fill="#000"/> Spotify
+                </span>
+                <h3 class="text-3xl font-bold">Descarga Spotify Para Windows</h3>
+                <p class="text-xl text-zinc-900">
+                    Disfruta de audio de alta calidad, reproducción en modo offline y un feed con la actividad de tus amigos que te permite ver lo que tus personas favoritas están escuchando en tiempo real.
+                </p>
+                <button class="block px-8 py-3 text-black font-semibold bg-zinc-50 hover:scale-105 hover:bg-zinc-200 rounded-full cursor-pointer">Descarga la aplicación gratuita</button>
+            </div>
+            <picture class="col-span-3">
+                <img src="/download-page-image.png" alt="Descarga spotify" class="w-full lg:scale-110 mt-4 lg:ml-10">
+            </picture>
+        </article>
+    </section>
+    <PreFooter/>
+</Layout>
