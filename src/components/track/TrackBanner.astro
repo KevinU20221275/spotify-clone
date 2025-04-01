@@ -1,0 +1,39 @@
+---
+// import type
+import type { Song } from '@/data/songs'
+
+interface Props {
+    song: Song
+    artistName: string
+    artistCover: string
+    albumTitle: string
+}
+
+const { song, artistName, artistCover, albumTitle } = Astro.props
+---
+
+<header class="flex flex-row gap-8 px-6 mt-12">
+    <picture class="aspect-square h-53 w-53 flex-none">
+        <img 
+            src={song.image} 
+            alt={`cover of ${song.title} song`} 
+            class="w-full h-full object-cover shadow-lg"
+        />
+    </picture>
+
+    <div class="flex flex-col justify-end gap-4">
+        <h4 class="text-white text-sm">Canción</h4>
+        
+        <h1 class="text-white text-5xl font-bold block">{song.title}</h1>
+        
+        <div class="flex gap-2 items-center text-sm text-white/40">
+            <picture class="w-10 h-10 rounded-full overflow-hidden">
+                <img src={artistCover} alt=`image of ${artistName} artist` class="w-full h-full object-cover">
+            </picture> 
+            <p class="text-white font-bold">{artistName}</p> • 
+            <p class="text-zinc-200">{albumTitle}</p> • 
+            <span>{song.duration}</span> • 
+            <span>{song.streams}</span>
+        </div>
+    </div>
+</header> 
