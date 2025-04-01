@@ -1,0 +1,28 @@
+---
+import LibraryIcon from "@/icons/Library.astro";
+import { AddPlayList } from "@/components/playlist/AddPlaylist"; 
+import { AsideMenuControl } from "./AsideMenuControl";
+---
+<nav class="flex flex-col gap-2 bg-zinc-900 rounded-lg p-2 flex-1 group">
+        <div class="flex w-full pt-4 justify-between items-center">
+            <div>
+                <label for="checkbox" class="flex gap-3 hover:text-zinc-300 text-zinc-400 cursor-pointer px-5">
+                    <div class="inline-block">
+                        <LibraryIcon></LibraryIcon>
+                    </div>
+                    <span class="text-nowrap transition-all duration-200">
+                        Tu Libreria
+                    </span>
+                    <input type="checkbox" name="checkbox" id="checkbox">
+                <label/>
+            </div>
+            <AddPlayList 
+            className={'flex items-center gap-1 w-[36px] text-sm text-zinc-400 hover:bg-zinc-800 bg-zinc-900 px-2 py-2 xl:px-4 rounded-full hover:text-white transition-all xl:w-24 overflow-x-hidden cursor-pointer group duration-500'} 
+            plusIconClassName={'w-5 h-5'}
+            client:load 
+            />
+        </div>
+        <ul>
+            <AsideMenuControl client:load transition:name="side-menu" transition:persist />
+        </ul>
+</nav>
