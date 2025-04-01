@@ -14,7 +14,7 @@ export function GridListCard({playlist, height, currentItem, currentPlaylist, is
             >
                 <picture className="h-8 w-8 flex-none relative">
                     <img src={cover} alt={`cover of ${title} by ${artists.join(", ")}`} className="object-cover rounded-md" />
-                    {height !== "3" && 
+                    {height !== "3" && playlist.songs.length > 0 &&
                         <div className="absolute bottom-2 right-2">
                             <CardPlayButton id={id}/>
                         </div>
