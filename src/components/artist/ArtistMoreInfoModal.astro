@@ -1,0 +1,87 @@
+---
+// import type
+import type { Artist } from '@/data/artists'
+
+// import components
+import { CloseIcon } from '@/icons/CloseIcon'
+
+interface Props {
+    artist: Artist
+}
+
+const { artist } = Astro.props
+---
+
+<dialog  class="fixed w-xl top-1/2 left-1/2 -translate-y-1/2 -translate-x-1/2 z-50 bg-zinc-800 pb-4" >
+    <button class="absolute top-2 right-2 cursor-pointer" id="close-modal-btn"><CloseIcon className={'text-zinc-300 w-8 h-8'} /></button>
+    <header class="h-52 bg-black">
+        <img src={artist?.cover} alt={`image of ${artist?.name}`} class="h-full mx-auto">
+    </header>
+    <section class="p-8 grid grid-cols-3 ">
+        <article class="flex flex-col gap-8 col-span-1">
+            <div>
+                <p class="text-2xl text-white font-bold leading-3.5">{artist?.followers}</p>
+                <span class="text-sm text-zinc-500">Seguidores</span>
+            </div>
+            <div>
+                <p class="text-2xl text-white font-bold leading-3.5">{artist?.monthlyListeners}</p>
+                <span class="text-sm text-zinc-500">Oyentes mensuales</span>
+            </div>
+        </article>
+        <article class="text-zinc-400 col-span-2 flex flex-col gap-4">
+            <p>{artist?.about}</p>
+
+            <div class="flex items-center gap-2">
+                <picture class="w-10 h-10 overflow-hidden rounded-full">
+                    <img src={artist?.cover} alt="" class="w-full object-cover">
+                </picture>
+                <p>Publicado por {artist?.name}</p>
+            </div>
+        </article>
+    </section>
+</dialog>
+
+
+<script >
+    function setupModal(){
+        const openModalBtn = document.getElementById("open-modal-btn");
+        const dialogModal = document.querySelector("dialog")
+        const closeModalBtn = document.getElementById("close-modal-btn")
+
+        openModalBtn?.removeEventListener("click", openModal)
+        closeModalBtn?.removeEventListener("click", closeModal)
+        document.removeEventListener("click", handleCloseModalDocument)
+
+        function openModal(){
+            const value = dialogModal?.open
+            if (dialogModal){
+                dialogModal.open = !value;
+            }
+        }
+        
+        function closeModal(){
+            const value = dialogModal?.open
+            if (dialogModal){
+                dialogModal.open = !value;
+            }
+        }
+
+        function handleCloseModalDocument(e : any){
+            if (e.target !== openModalBtn && e.target !== dialogModal){
+                if (dialogModal){
+                    dialogModal.open = false
+                }
+            }
+        }
+
+        openModalBtn?.addEventListener("click", openModal)
+        closeModalBtn?.addEventListener("click", closeModal)
+        document.addEventListener("click", handleCloseModalDocument)
+    }
+
+    setupModal()
+
+    document.addEventListener("astro:after-swap", () => {
+        setTimeout(setupModal, 1000)
+    })
+</script>
