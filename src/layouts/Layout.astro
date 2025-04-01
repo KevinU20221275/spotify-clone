@@ -49,96 +49,52 @@ import Navbar from '@/components/layout/navbar/Navbar.astro';
 	}
 
 	@font-face {
-        font-family: "CircularStd";
-        src: url("/fonts/CircularStd-Medium.woff2") format("woff2");
-        font-weight: 500;
-        font-style: normal;
-        font-display: swap;
-    }
+    font-family: "CircularStd";
+    src: url("/fonts/CircularStd-Medium.woff2") format("woff2");
+    font-weight: 500;
+    font-style: normal;
+    font-display: swap;
+  }
 
-      @font-face {
-        font-family: "CircularStd";
-        src: url("/fonts/CircularStd-Book.woff2") format("woff2");
-        font-weight: 400;
-        font-style: normal;
-        font-display: swap;
-    }
+  @font-face {
+    font-family: "CircularStd";
+    src: url("/fonts/CircularStd-Book.woff2") format("woff2");
+    font-weight: 400;
+    font-style: normal;
+    font-display: swap;
+  }
 
-      @font-face {
-        font-family: "CircularStd";
-        src: url("/fonts/CircularStd-Light.woff2") format("woff2");
-        font-weight: 300;
-        font-style: normal;
-        font-display: swap;
-    }
+  @font-face {
+    font-family: "CircularStd";
+    src: url("/fonts/CircularStd-Light.woff2") format("woff2");
+    font-weight: 300;
+    font-style: normal;
+    font-display: swap;
+  }
 
-      @font-face {
-        font-family: "CircularStd";
-        src: url("/fonts/CircularStd-Bold.woff2") format("woff2");
-        font-weight: 700;
-        font-style: normal;
-        font-display: swap;
-    }
+  @font-face {
+    font-family: "CircularStd";
+    src: url("/fonts/CircularStd-Bold.woff2") format("woff2");
+    font-weight: 700;
+    font-style: normal;
+    font-display: swap;
+  }
 
-      @font-face {
-        font-family: "CircularStd";
-        src: url("/fonts/CircularStd-Black.woff2") format("woff2");
-        font-weight: 900;
-        font-style: normal;
-        font-display: swap;
-    }
+  @font-face {
+    font-family: "CircularStd";
+    src: url("/fonts/CircularStd-Black.woff2") format("woff2");
+    font-weight: 900;
+    font-style: normal;
+    font-display: swap;
+  }
 
 	#app {
 		display: grid;
 		grid-template-areas:
     "header header header"
-		 "aside main main"
-		 "player player player";
+		"aside main main"
+		"player player player";
 		grid-template-columns: auto 1fr ;
 		grid-template-rows: auto 1fr auto;
 	}
-
-	
-
-
-#app .aside:has(> nav > div > div > label > input:checked){
-    width: 78px;
-    overflow: hidden;
-
-    nav > div > div > label > span {
-      opacity: 0;
-    }
-
-    .add-playlist-btn {
-      display: none;
-    }
-
-   .btn-filters{
-    opacity: 0;
-   }
-
-   .playlist-item {
-    padding: 4px;
-   }
-
-   .search-aside-playlist {
-    display: none;
-   }
-   .side-card-button {
-    display: none;
-   }
-
-    nav {
-      /* padding-inline: 4px; */
-      padding-top: 12px;
-    }
-
-    .createPlaylist{
-      display: none;
-    }
-    .recentMenu{
-      display: none;
-    }
-}
-
 </style>
