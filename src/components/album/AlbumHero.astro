@@ -1,0 +1,41 @@
+---
+// import type
+import type { Album } from "@/data/albums"
+
+// import components
+import { PlaylistDuration } from "../playlist/PlaylistDuration"
+
+interface Props {
+    album: Album
+}
+
+const { album } = Astro.props
+---
+
+<header class="flex flex-row gap-8 px-6 mt-12">
+    <picture class="aspect-square h-53 w-53 flex-none">
+        <img 
+            src={album.cover} 
+            alt={`cover of ${album.title}`} 
+            class="w-full h-full object-cover shadow-lg"
+        />
+    </picture>
+
+    <div class="flex flex-col justify-between">
+        <h2 class="flex flex-1 text-white items-end">Album</h2>
+        <div>
+            <h1 class="text-white text-5xl font-extrabold block">
+                {album.title}
+            </h1>
+        </div>
+
+        <div class="flex-1 flex items-end">
+            <div class="text-sm text-gray-300 font-normal">
+                <div>
+                    <span>{album.artists.join(", ")}</span>
+                </div>
+                <PlaylistDuration client:only="react" id={album.id}/>
+            </div>
+        </div>
+    </div>
+</header>
