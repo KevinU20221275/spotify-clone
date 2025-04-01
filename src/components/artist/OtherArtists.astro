@@ -1,0 +1,21 @@
+---
+// import type
+import type { Artist } from "@/data/artists"
+
+// import components
+import ArtistsCard from "./ArtistsCard.astro"
+
+interface Props {
+    otherArtists : Artist[]
+}
+
+const { otherArtists } = Astro.props
+---
+
+<section class="p-4 pt-16">
+    <h4 class="text-xl tex-bold text-white pb-2">A los fans también les gusta</h4>
+    <div class="flex gap-1">
+        {otherArtists.map((artist) => <ArtistsCard artist={artist} />)}
+    </div>
+</section>
+
