@@ -1,0 +1,29 @@
+---
+// import types
+import type { Song } from '@/data/songs'
+import type { Album } from '@/data/albums'
+
+// import components
+import { MusicTable } from '../common/MusicTable'
+
+interface Props {
+    albumSongs: Song[]
+    album: Album
+}
+
+const { albumSongs, album } = Astro.props
+---
+
+
+<div class="p-4 relative mt-3">
+    <a href=`/intl-es/album/${album.id}` class="flex items-center flex-1 gap-2 h-24 absolute top-0 left-4 right-4 bg-zinc-800 hover:bg-zinc-600 rounded-t-md overflow-hidden">
+        <picture class="w-24 h-24 aspect-square">
+            <img src={album.cover} alt={`cover of ${album.title} album`} class="w-full h-full object-cover">
+        </picture>
+        <div>
+            <span class="text-sm text-zinc-400 inline-block">Del album</span>
+            <h4 class="text-white font-bold">{album.title}</h4>
+        </div>
+    </a>
+    <MusicTable songs={albumSongs} playlistInfo={album} tableType='Album' client:visible />
+</div>
