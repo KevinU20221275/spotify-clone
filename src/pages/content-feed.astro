@@ -1,0 +1,17 @@
+---
+// import components
+import Layout from "@/layouts/Layout.astro";
+import {News} from "@/components/News"
+import PreFooter from "@/components/common/PreFooter.astro";
+---
+
+<Layout title="Spotify - Novedades">
+    <section class="p-4 pt-16 max-w-3xl mx-auto min-h-[72vh]">
+        <h3 class="text-3xl font-bold text-white">
+            Novedades
+        </h3>
+        <h6 class="text-sm text-zinc-400">Los últimos lanzamientos de artistas, podcasts y programas que sigues.</h6>
+        <News client:visible />
+    </section>
+    <PreFooter/>
+</Layout>
