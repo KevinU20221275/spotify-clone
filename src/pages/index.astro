@@ -1,11 +1,52 @@
 ---
-import Welcome from '../components/Welcome.astro';
-import Layout from '../layouts/Layout.astro';
+// import data
+import { playlists, myPlaylists } from '@/data/playlist';
+import { albums } from '@/data/albums';
 
-// Welcome to Astro! Wondering what to do next? Check out the Astro documentation at https://docs.astro.build
-// Don't want to use any of this? Delete everything in this file, the `assets`, `components`, and `layouts` directories, and start fresh.
+// import components
+import Layout from '../layouts/Layout.astro';
+import PlayListItemCard from '@/components/playlist/PlayListItemCard.astro';
+import PlaylistCard from '@/components/playlist/PlaylistCard.astro';
+import Greeting from "@/components/Greeting.svelte";
+import PreFooter from '@/components/common/PreFooter.astro';
+
+const myPlaylistId= myPlaylists.map((p) => p.id)
+const filteredPlaylist = playlists.filter((playlist) => !myPlaylistId.includes(playlist.id))
+const filteredAlbums = albums.filter((album) => !myPlaylistId.includes(album.id))
 ---
 
-<Layout>
-	<Welcome />
+<Layout title="Spotify Clone">
+	<div
+		id="playlist-container" 
+		class="relative transition-all bg-zinc-800">
+		
+		<div class="flex flex-col gap-8 relative z-1 px-6 pt-10">
+			<div class="grid grid-cols-2 lg:grid-cols-3 gap-2 mb-4">
+				{
+					myPlaylists.map((playlist) => <PlaylistCard playlist={playlist}/>)
+				}
+			</div>
+			<Greeting />
+			<section>
+                <h4 class="text-2xl font-extrabold text-white">Hecho para ti</h4>
+				<article class="flex flex-wrap mt-6 gap-4">
+					{
+						filteredPlaylist.map((playlist) => <PlayListItemCard playlist={playlist}/>)
+					}
+				</article>
+			</section>
+			<section>
+                <h4 class="text-2xl font-extrabold text-white">Álbumes</h4>
+                <article class="flex flex-wrap mt-6 gap-4">
+                    {filteredAlbums.map((album) => <PlayListItemCard playlist={album}/>)}
+                </article>
+            </section>
+			<PreFooter/>
+		</div>
+		<div class="shape absolute inset-0 bg-gradient-to-t from-zinc-900 via-zinc-900 to-zinc-900/5">
+
+		</div>
+	</div>
 </Layout>
+
+

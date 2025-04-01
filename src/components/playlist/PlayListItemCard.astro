@@ -1,0 +1,36 @@
+---
+import type { Playlist } from "@/data/playlist";
+import type { Album } from "@/data/albums";
+import {CardPlayButton} from "@/components/common/CardPlayButton.jsx";
+
+interface Props {
+    playlist: Playlist | Album;
+}
+
+const {playlist} = Astro.props
+const { id, cover, title, artists, color, type } = playlist
+
+const artistsString = artists.join(", ")
+
+const path = type === "Album" ? `/intl-es/album/${id}` : `/playlist/${id}`
+---
+<article class="group relative hover:bg-zinc-800 shadow-lg hover:shadow-xl bg-zinc-500/30 transition-all duration-300 rounded-md min-h-[200px]">
+    <div class="absolute right-4 bottom-20 translate-y-4 transition-all duration-500 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 z-10">
+        <CardPlayButton client:visible id={id} className={''} />
+    </div>
+    <a href={path}
+    class="transition-all duration-300 flex relative p-2 overflow-visible gap-2 pb-6 rounded-md w-44 flex-col"
+    >
+        <picture class="aspect-[4/3] h-auto w-full flex-none">
+            <img 
+                src={cover} 
+                alt={`cover of ${title} by ${artistsString}`} 
+                class="w-full h-full object-cover rounded-md"
+            />
+        </picture>
+        <div class="flex flex-auto flex-col px-2">
+            <h4 class="text-white text-sm">{title}</h4>
+            <span class="text-xs text-gray-400 text-nowrap truncate">{artistsString}</span>
+        </div>
+    </a>
+</article>
