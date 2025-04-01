@@ -1,0 +1,17 @@
+---
+import type { CategoryItem } from "@/data/podcastsCategories";
+
+interface Props {
+    item: CategoryItem;
+}
+
+const {item} = Astro.props
+---
+
+<a href="#" style=`background-color:${item.color} ;` class=`h-40 xl:h-44 relative z-40 overflow-hidden rounded-md p-4 transition-all `>
+    <h6 class="text-white text-2xl font-bold relative z-40">{item.name}</h6>    
+    {item.cover && 
+    <img src={item.cover} 
+    alt={`imagen de la categoria ${item.name} de podcasts`}
+    class="absolute rotate-22 h-32 right-[-15px] bottom-[-10px]" />}
+</a>
