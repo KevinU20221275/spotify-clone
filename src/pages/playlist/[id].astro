@@ -38,7 +38,7 @@ const isPlaylistInMyPlaylist = myPlaylists.some(p => p.id === playlist?.id)
         {!playlist && <h1 class="text-white text-5xl font-bold text-center mt-10">Playlist no Encontrada</h1>}
 
         <div class="pl-6 pt-6 flex gap-5 items-center">
-            {playlist  && <CardPlayButton id={id} size='large' className={''} client:visible />}
+            {playlist && playlist.songs.length > 0 && <CardPlayButton id={id} size='large' className={''} client:visible />}
             {(playlist && playlist?.createdBy !== "Spotify") && <RemovePlaylistBtn id={playlist.id} client:visible /> }
             {(playlist && playlist.createdBy === "Spotify") && <AddPlayList playlist={playlist} isPlaylistInMyPlaylist={isPlaylistInMyPlaylist}  className={'w-8 h-8'} client:visible />}
         </div>    

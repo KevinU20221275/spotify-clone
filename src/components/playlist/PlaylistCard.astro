@@ -8,7 +8,7 @@ interface Props {
     playlist: Playlist | Album
 }
 const {playlist} = Astro.props
-const { id, cover, title, artists, color, type } = playlist
+const { id, cover, title, artists, color, type, songs } = playlist
 const path = type === "Album" ? `/intl-es/album/${id}` : `/playlist/${id}`
 ---
 <a href={path} 
@@ -23,7 +23,7 @@ const path = type === "Album" ? `/intl-es/album/${id}` : `/playlist/${id}`
     </div>
     
     <PlayingIndicator client:load currentPlaylistId={id} songId={null} />
-    <CardPlayButton client:load id={id} size="extra-small" className={'hidden group-hover:inline-block shadow-xl shadow-black'} />
+    {songs.length > 0 && <CardPlayButton client:load id={id} size="extra-small" className={'hidden group-hover:inline-block shadow-xl shadow-black'} />}
 </a>
 
 
