@@ -7,7 +7,12 @@ import { CurrentSong } from "./CurrentSong";
 
 
 export function Player () {
-    const { isPlaying, setIsPlaying, currentMusic, volume, setVolume,setCurrentMusic } = usePlayerStore(state => state);
+    const currentMusic = usePlayerStore(state => state.currentMusic)
+    const setCurrentMusic = usePlayerStore(state => state.setCurrentMusic)
+    const isPlaying = usePlayerStore(state => state.isPlaying)
+    const setIsPlaying = usePlayerStore(state => state.setIsPlaying)
+    const volume = usePlayerStore(state => state.volume)
+
     const audioRef = useRef(null);
 
     useEffect(() => {
@@ -20,7 +25,7 @@ export function Player () {
     },[volume])
 
     useEffect(() => {
-        const { song, playlist, songs} = currentMusic
+        const { song } = currentMusic
  
         if (song){
             const src = `/music/0${song.id}.mp3`
