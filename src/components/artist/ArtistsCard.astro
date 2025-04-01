@@ -1,0 +1,25 @@
+---
+// import type
+import {  type Artist } from "@/data/artists"
+
+// import components
+import { CardPlayButton } from "../common/CardPlayButton"
+
+interface Props {
+    artist: Artist
+}
+
+const {artist} = Astro.props
+const { id, name, cover, type, albums, playlists } = artist
+---
+
+<a href={`/intl-es/artist/${id}`} class="relative hover:bg-zinc-800 group p-3 flex flex-col rounded-md gap-1">
+    <div class="absolute right-5 bottom-20 translate-y-4 transition-all duration-500 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 z-10">
+        {playlists && <CardPlayButton client:visible id={playlists[0]} className={''} />}
+    </div>
+    <picture class="relative w-52 h-52 rounded-full overflow-hidden">
+        <img src={cover} alt={`image of ${name} artist`} class="w-full object-cover" />
+    </picture>
+    <h6 class="text-white">{name}</h6>
+    <span class="text-zinc-500 text-sm">{type}</span>
+</a>
