@@ -1,22 +1,144 @@
+---
+interface Props {
+	title: string;
+}
+const {title} = Astro.props
+import '../styles/global.css';
+import AsideMenu from '@/components/layout/aside/AsideMenu.astro';
+import { ClientRouter } from 'astro:transitions';
+import { Player } from '@/components/player/Player';
+import Navbar from '@/components/layout/navbar/Navbar.astro';
+---
+
 <!doctype html>
 <html lang="en">
 	<head>
 		<meta charset="UTF-8" />
 		<meta name="viewport" content="width=device-width" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
 		<meta name="generator" content={Astro.generator} />
-		<title>Astro Basics</title>
+		<title>{title}</title>
+		<ClientRouter fallback='none' />
 	</head>
 	<body>
-		<slot />
+		<div id="app" class="relative h-screen p-2 gap-2 min-w-3xl">
+      <header class="[grid-area:header] bg-transparent min-w-[400px]">
+        <Navbar/>
+      </header>
+			<aside class="[grid-area:aside] aside w-[320px] lg:w-[350px] transition-all ease-in-out duration-300 flex-col flex">
+				<AsideMenu />
+			</aside>
+			<main class="[grid-area:main] overflow-y-auto bg-zinc-900 rounded-lg flex-auto w-full">
+				<slot/>
+			</main>
+			<footer class="[grid-area:player] h-[80px] bg-black">
+				<Player client:load transition:name="media-player"  transition:persist/>
+			</footer>
+		</div>
 	</body>
 </html>
 
 <style>
 	html,
 	body {
+		font-family: "CircularStd",system-ui, sans-serif;
 		margin: 0;
+		background-color: #000;
 		width: 100%;
 		height: 100%;
 	}
+
+	@font-face {
+        font-family: "CircularStd";
+        src: url("/fonts/CircularStd-Medium.woff2") format("woff2");
+        font-weight: 500;
+        font-style: normal;
+        font-display: swap;
+    }
+
+      @font-face {
+        font-family: "CircularStd";
+        src: url("/fonts/CircularStd-Book.woff2") format("woff2");
+        font-weight: 400;
+        font-style: normal;
+        font-display: swap;
+    }
+
+      @font-face {
+        font-family: "CircularStd";
+        src: url("/fonts/CircularStd-Light.woff2") format("woff2");
+        font-weight: 300;
+        font-style: normal;
+        font-display: swap;
+    }
+
+      @font-face {
+        font-family: "CircularStd";
+        src: url("/fonts/CircularStd-Bold.woff2") format("woff2");
+        font-weight: 700;
+        font-style: normal;
+        font-display: swap;
+    }
+
+      @font-face {
+        font-family: "CircularStd";
+        src: url("/fonts/CircularStd-Black.woff2") format("woff2");
+        font-weight: 900;
+        font-style: normal;
+        font-display: swap;
+    }
+
+	#app {
+		display: grid;
+		grid-template-areas:
+    "header header header"
+		 "aside main main"
+		 "player player player";
+		grid-template-columns: auto 1fr ;
+		grid-template-rows: auto 1fr auto;
+	}
+
+	
+
+
+#app .aside:has(> nav > div > div > label > input:checked){
+    width: 78px;
+    overflow: hidden;
+
+    nav > div > div > label > span {
+      opacity: 0;
+    }
+
+    .add-playlist-btn {
+      display: none;
+    }
+
+   .btn-filters{
+    opacity: 0;
+   }
+
+   .playlist-item {
+    padding: 4px;
+   }
+
+   .search-aside-playlist {
+    display: none;
+   }
+   .side-card-button {
+    display: none;
+   }
+
+    nav {
+      /* padding-inline: 4px; */
+      padding-top: 12px;
+    }
+
+    .createPlaylist{
+      display: none;
+    }
+    .recentMenu{
+      display: none;
+    }
+}
+
 </style>
