@@ -24,6 +24,8 @@ const { title, bgColor } = Astro.props
         if (!playlistContainer) return
 
         function handleScroll() {
+            if (!playlistContainer) return
+                
             const scrollValue = playlistContainer.scrollTop
 
             if (scrollValue > 75 && scrollValue < 200) {
