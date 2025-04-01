@@ -1,0 +1,20 @@
+---
+// import type
+import type { Album } from '@/data/albums'
+
+// import components
+import PlayListItemCard from '../playlist/PlayListItemCard.astro'
+
+interface Props {
+    artistInAlbums: Album[]
+}
+
+const { artistInAlbums } = Astro.props
+---
+
+<section class="p-4 pt-16">
+    <h4 class="text-xl tex-bold text-white pb-2">Se puede encontrar en</h4>
+    <div class="flex gap-2 flex-wrap">
+        {artistInAlbums.map((album) => <PlayListItemCard playlist={album} />)}
+    </div>
+</section>
