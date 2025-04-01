@@ -1,0 +1,15 @@
+---
+interface Props {
+    accentColor: string;
+    darkColor: string;
+}
+
+const { accentColor, darkColor } = Astro.props
+---
+
+<div 
+    style={{
+        background: `linear-gradient(to bottom, ${accentColor}, ${darkColor}, rgba(24, 24, 27, 1) 90%)`
+    }}
+    class="absolute inset-0 bg-gradient-to-t from-zinc-900 via-zinc-900/80 -z-10 bg-amber-50">
+</div>
