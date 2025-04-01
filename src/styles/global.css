@@ -34,8 +34,53 @@
     animation-delay: 0.3s;
 }
 
-#checkbox {
+#asideCheckbox {
     display: none;
+}
+
+.btn-filters {
+    transition: all ease-in-out .1s;
+}
+
+#app .aside:has(#asideCheckbox:checked){
+    width: 78px;
+    overflow: hidden;
+
+    nav .aside-title  {
+        opacity: 0; 
+    }
+
+    .add-playlist-btn {
+        display: none;
+    }
+
+    .btn-filters{
+        opacity: 0;
+    }
+
+    .playlist-item {
+        padding: 4px;
+    }
+
+    .search-aside-playlist {
+        display: none;
+    }
+    
+    .side-card-button {
+        display: none;
+    }
+
+    nav {
+        padding-top: 8px !important;
+    }
+
+    .createPlaylist{
+        display: none;
+    }
+    
+    .recentMenu{
+        display: none;
+    }
 }
 
 .fadeOut {
