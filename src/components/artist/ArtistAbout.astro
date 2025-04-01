@@ -1,0 +1,30 @@
+---
+// import type
+import type { Artist } from '@/data/artists'
+
+// import Component
+import ArtistMoreInfoModal from './ArtistMoreInfoModal.astro'
+
+interface Props {
+    artist: Artist
+}
+
+const { artist } = Astro.props
+---
+
+<section class="p-4">
+    <h4 class="text-xl tex-bold text-white pb-2">Acerca de</h4>
+    <article style={{background:`linear-gradient(10deg, rgba(0,0,0,0.9), rgba(0,0,0,0.3)), url(${artist.banner ?? artist.cover})`, backgroundPosition: "center", backgroundSize: "cover"}}
+    class="h-[420px] w-4xl bg-amber-50 rounded-sm hover:scale-[101%] flex items-end"
+    id="open-modal-btn"
+    >
+        <div class="p-8">
+            <p class=" text-white font-bold">{artist.monthlyListeners} oyentes mensuales</p>
+            <p class=" text-white">
+                {artist.about}
+            </p>
+        </div>
+    </article>
+</section>
+
+{artist.about && <ArtistMoreInfoModal artist={artist} />}
