@@ -1,0 +1,55 @@
+---
+// import data
+import { songs } from '@/data/songs';
+import { myPlaylists } from '@/data/playlist';
+import { albums } from '@/data/albums';
+
+// import components
+import Layout from '@/layouts/Layout.astro';
+import AlbumHero from '@/components/album/AlbumHero.astro';
+import { CardPlayButton } from '@/components/common/CardPlayButton';
+import { AddPlayList } from "@/components/playlist/AddPlaylist"
+import StickyBtn from '@/components/common/StickyBtn.astro';
+import { MusicTable } from '@/components/common/MusicTable';
+import PreFooter from '@/components/common/PreFooter.astro';
+import Gradient from '@/components/common/Gradient.astro';
+
+const { id } = Astro.params
+const album = albums.find(a => a.id === id)
+const myPlaylistId = myPlaylists.map((playlist) => playlist?.id)
+const albumSongs = songs.filter(s => s.albumId === album?.id)
+let isAlbumInMyPlaylist;
+
+if (album) isAlbumInMyPlaylist = myPlaylistId.includes(album.id)
+---
+
+<Layout title="Spotify Clone">
+	<div
+		id="playlist-container" 
+		class="relative flex flex-col h-full overflow-x-hidden bg-zinc-900"
+        transition:name=`playlist ${id} box`
+    >   
+        {album && 
+            <StickyBtn title={album.title} bgColor={album.color.dark}>
+                <CardPlayButton id={album.id}  className={''} client:visible />
+            </StickyBtn>
+        }
+
+        {album && <AlbumHero album={album} />}
+
+        {!album && <h1 class="text-white text-5xl font-bold text-center mt-10">Album no Encontrado</h1>}
+        
+        <div class="pl-6 py-6 flex gap-5 items-center">
+            {album && <CardPlayButton id={id} size='large' className={''} client:visible />}
+            {album && <AddPlayList playlist={album} isPlaylistInMyPlaylist={isAlbumInMyPlaylist}  className={'w-8 h-8'} client:visible />}
+        </div>
+    
+        <section class="px-4">
+            <MusicTable songs={albumSongs} playlistInfo={album} tableType='Album' client:visible />
+        </section>
+
+        {album?.color && <Gradient accentColor={album.color.accent} darkColor={album.color.dark} />}
+    
+        <PreFooter/>
+    </div>
+</Layout>
