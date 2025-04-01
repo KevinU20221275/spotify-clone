@@ -1,12 +1,5 @@
-export const PLAYLISTS_FILTERS = {
-    ALL: 'ALL',
-    CREATED_BY_ME: 'CREATED_BY_ME',
-    CREATED_BY_SPOTIFY: 'CREATED_BY_SPOTIFY',
-    PLAYLISTS : 'PLAYLISTS',
-    ALBUMS: 'ALBUMS',
-}
-
 import { useState } from "react"
+import { PLAYLISTS_FILTERS } from "@/constants/constants"
 
 export function usePlaylistsFilters(){
     const [filterPlaylistsBtn, setFilterPlaylistsBtn] = useState({
@@ -74,9 +67,3 @@ export function usePlaylistsFilters(){
 
     return {filterPlaylistsBtn, changeFilter}
 }
-
-// en la x {() => setFilterPlalistsBtn({showAll: false, createdByMe: false, createdBySpotify: false})
-// playlist setFilterPlalistsBtn({showAll: !filterPlalistsBtn.showAll, createdByMe: false, createdBySpotify:false})}
-// spoty setFilterPlalistsBtn({...filterPlalistsBtn, createdBySpotify: !filterPlalistsBtn.createdBySpotify, createdByMe : false})}
-// por ti setFilterPlalistsBtn(({...filterPlalistsBtn, createdByMe: !filterPlalistsBtn.createdByMe, createdBySpotify: false})
-// albums setFilterPlalistsBtn({showAll: false, createdByMe: false, createdBySpotify:false, albums: !filterPlalistsBtn.albums})} 
