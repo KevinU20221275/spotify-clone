@@ -1,0 +1,64 @@
+---
+interface Props {
+    title: string;
+    bgColor?:string;
+}
+
+const { title, bgColor } = Astro.props
+---
+<div style={{backgroundColor: `${bgColor}`}} class="sticky top-0 z-50 hidden transition-all" id="sticky-btn">
+    <div class="flex justify-start items-center gap-2 p-2 opacity-0" id="sticky-container">
+        <slot/>
+        <h3 class="text-2xl text-white font-bold opaci">
+            {title}
+        </h3>
+    </div>
+</div>
+
+<script>
+    function setupStickyButton(){
+        const stickyBtn = document.getElementById("sticky-btn");
+        const stickyContainer = document.getElementById("sticky-container")
+        const playlistContainer = document.getElementById("playlist-container")
+
+        if (!playlistContainer) return
+
+        function handleScroll() {
+            const scrollValue = playlistContainer.scrollTop
+
+            if (scrollValue > 75 && scrollValue < 200) {
+                stickyBtn?.classList.remove('hidden', 'opacity-0', 'opacity-100', 'opacity-35');
+                stickyBtn?.classList.add('flex', 'opacity-25');
+                stickyContainer?.classList.remove('opacity-100')
+                stickyContainer?.classList.add('opacity-0')
+            } else if (scrollValue >= 220 && scrollValue < 300) {
+                stickyBtn?.classList.remove('opacity-25', 'opacity-100')
+                stickyBtn?.classList.add('opacity-35')
+                stickyContainer?.classList.remove('opacity-100')
+            } else if (scrollValue >= 300){
+                stickyBtn?.classList.remove('opacity-25','opacity-35')
+                stickyBtn?.classList.add('opacity-100')
+                stickyContainer?.classList.remove('opacity-0')
+                stickyContainer?.classList.add('opacity-100')
+            } else {
+                stickyBtn?.classList.remove('flex', 'opacity-25', 'opacity-35', 'opacity-100');
+                stickyBtn?.classList.add('hidden', 'opacity-0');
+                stickyContainer?.classList.remove('opacity-100')
+                stickyContainer?.classList.add('opacity-0')
+            }
+        }
+
+        playlistContainer.removeEventListener("scroll", handleScroll)
+        playlistContainer.addEventListener("scroll", handleScroll)
+    }
+
+    setupStickyButton()
+
+    document.addEventListener("DOMContentLoaded", () => {
+        setTimeout(setupStickyButton, 200)
+    })
+
+    document.addEventListener("astro:after-swap", () => {
+        setTimeout(setupStickyButton, 100)
+    })
+</script>
