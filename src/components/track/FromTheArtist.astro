@@ -1,0 +1,20 @@
+---
+// import type
+import type { Artist } from '@/data/artists'
+
+interface Props{
+    artist: Artist
+}
+
+const { artist } = Astro.props
+---
+
+<a href=`/intl-es/artist/${artist.id}` class="flex gap-2 items-center hover:bg-white/20 rounded-sm m-4 p-4">
+    <picture class="h-20 w-20 rounded-full overflow-hidden">
+        <img src={artist.cover} alt=`image of ${artist.name} artist` class="w-full h-full object-cover">
+    </picture> 
+    <div class="text-base text-white">
+        <p>Artista</p>
+        <p class="font-bold text-xl">{artist.name}</p>
+    </div>
+</a>
