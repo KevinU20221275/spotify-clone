@@ -1,0 +1,77 @@
+---
+// import data
+import { songs } from '@/data/songs';
+import { artistsPlaylists } from '@/data/playlist';
+import { albums } from '@/data/albums';
+import { artists } from '@/data/artists';
+
+// import components
+import Layout from '@/layouts/Layout.astro';
+import ArtistHero from '@/components/artist/ArtistHero.astro';
+import OtherArtists from '@/components/artist/OtherArtists.astro';
+import ArtistAlbums from '@/components/artist/ArtistAlbums.astro';
+import ArtistAbout from '@/components/artist/ArtistAbout.astro';
+import StickyBtn from '@/components/common/StickyBtn.astro';
+import { CardPlayButton } from '@/components/common/CardPlayButton';
+import { MusicTable } from '@/components/common/MusicTable';
+import PreFooter from '@/components/common/PreFooter.astro';
+import Gradient from '@/components/common/Gradient.astro';
+
+const { id } = Astro.params
+
+let artistInAlbums;
+
+const artist = artists.find((art) => art.id === id)
+const artistPlaylist = artistsPlaylists.find((artPlay) => artPlay.artistId === artist?.id)
+const artistSong = songs.filter((s) => artistPlaylist?.songs.includes(s.id))
+if (artist){
+    artistInAlbums = albums.filter((a) => a.artists.includes(artist.name))
+}
+const otherArtists = artists.filter((art) => art.id !== artist?.id).slice(0,6)
+---
+<Layout title={`${artist?.name} | Spotify`}>
+    <div
+	id="playlist-container" 
+	class="relative flex flex-col h-full overflow-x-hidden bg-zinc-900"
+    transition:name=`playlist ${id} box`
+    >
+        {(artistPlaylist && artist) && 
+            <StickyBtn title={artist.name} bgColor={artist.color.dark}>
+                <CardPlayButton id={artistPlaylist.id}  className={''} client:visible />
+            </StickyBtn>
+        }
+        
+        {artist && <ArtistHero artist={artist} />}
+
+        {!artist && <h1 class="text-white text-5xl font-bold text-center mt-10">Artista no Encontrado</h1>}
+      
+        <div class="pl-6 pt-6 flex gap-5 items-center">
+            {artistPlaylist && <CardPlayButton id={artistPlaylist?.id} size='large' className={''} client:visible />}
+        </div>
+        
+        <div class="px-2">
+            {artistSong.length > 0 && <MusicTable songs={artistSong} playlistInfo={artistPlaylist} tableType={artistPlaylist?.type} client:visible/>}
+        </div>
+
+        {otherArtists.length > 0 && <OtherArtists otherArtists={otherArtists} /> }
+
+        {(artistInAlbums && artistInAlbums.length > 0) && <ArtistAlbums artistInAlbums={artistInAlbums} /> }
+
+        {artist?.about && <ArtistAbout artist={artist} /> }
+
+        {artist?.color && <Gradient accentColor={artist.color.accent} darkColor={artist.color.dark} />}
+    
+        <PreFooter/>
+    </div>
+</Layout>
+
+
+<style>
+    header {
+        background-size: contain !important;
+        background-repeat: no-repeat !important;
+        background-clip: border-box !important;
+        background-position-y: 50px !important;
+        background-attachment: fixed !important;
+    }
+</style>
