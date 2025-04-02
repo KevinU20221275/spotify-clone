@@ -58,7 +58,7 @@ export const SongsManager = ({id, playlist}) => {
                 setIsPlaying(false)
                 setCurrentMusic({...currentMusic, songs: [], song: null });
             } else {
-                setCurrentMusic({...currentMusic, songs: newPlaylistSongs, song: newPlaylistSongs[0] });
+                setCurrentMusic({playlist: currentPlaylist, songs: newPlaylistSongs, song: newPlaylistSongs[0] });
             }
         }
     }, [playlistSongs, id])
