@@ -138,6 +138,8 @@ This project provides an optimized and structured approach to managing playlists
 This project is a Spotify clone created solely for educational purposes to improve my development skills.  
 The songs and artists displayed in the application may not be real, as some titles were invented and others mixed.  
 
-I do not own any rights to the music content, and this project has no commercial purpose.  
+I do not own any rights to the music content, and this project has no commercial purpose.
+
+You can see the project live at: https://spotify-clone-2562.vercel.app/
 
 
