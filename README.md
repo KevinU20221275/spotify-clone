@@ -1,48 +1,143 @@
-# Astro Starter Kit: Basics
+# Music Playlist App
 
-```sh
-npm create astro@latest -- --template basics
+This project is a music playlist management application built with **Astro** and **React**. It features a simulated API, global state management with Zustand, and various performance optimizations using React hooks. The project is styled using **Tailwind CSS**.
+
+## Features
+
+- **Simulated API**: The application mimics API calls with local data.
+- **Global State Management**: Zustand is used to manage the `currentMusic` state.
+- **Efficient Searching**: Implemented a debounce function to optimize the main search feature.
+- **Custom Hooks**:
+  - `usePlaylistsFilters`: Manages filtering of playlists based on different criteria.
+  - `useFilterPlaylists`: Filters playlists based on user-selected options.
+  - `useAsideView`: Controls the display mode of playlists (list, compact list, or grid view).
+- **Performance Optimizations**:
+  - Utilizes `useMemo` for filtering playlists and recommended songs.
+  - Uses `useCallback` to optimize add/remove functions in the playlist.
+
+## Key Project Structure
+
+```
+📁 spotify-clone/
+ ├── 📁 public/
+ |    ├── 📁 categories/
+ |    |    ├── 📁 posdcats/ # some images of podcast categories
+ |    |
+ |    ├── 📁 fonts/          
+ │    ├── 📁 music/  # Contains audio files
+ │
+ ├── 📁 src/
+ │    ├── 📁 components/  # React components
+ │    ├── 📁 services/    # API request functions
+ │    ├── 📁 data/        # Local data for playlists, songs, etc.
+ |    ├── 📁 hooks/       # usePlaylistsFilters, useFilterPlaylists, useAsideView
+ |    ├── 📁 pages/
+ |    |    ├── 📁 api/    # small api to get data from playlists and songs
+ |    ├── 📁 services/    # API request functions
+ |    ├── 📁 store/       # zustand state
+ │
+ ├── 📁 styles/
+ │    ├── global.css   # Styling configuration
+ │
+ ├── astro.config.mjs    # Astro configuration
+ ├── tsconfig.json       # TypeScript configuration
+ ├── package.json        # Dependencies
 ```
 
-[![Open in StackBlitz](https://developer.stackblitz.com/img/open_in_stackblitz.svg)](https://stackblitz.com/github/withastro/astro/tree/latest/examples/basics)
-[![Open with CodeSandbox](https://assets.codesandbox.io/github/button-edit-lime.svg)](https://codesandbox.io/p/sandbox/github/withastro/astro/tree/latest/examples/basics)
-[![Open in GitHub Codespaces](https://github.com/codespaces/badge.svg)](https://codespaces.new/withastro/astro?devcontainer_path=.devcontainer/basics/devcontainer.json)
+## Global State Management
 
-> 🧑‍🚀 **Seasoned astronaut?** Delete this file. Have fun!
+The application uses Zustand to store and manage the currently playing music state:
 
-![just-the-basics](https://github.com/withastro/astro/assets/2244813/a0a5533c-a856-4198-8470-2d67b1d7c554)
-
-## 🚀 Project Structure
-
-Inside of your Astro project, you'll see the following folders and files:
-
-```text
-/
-├── public/
-│   └── favicon.svg
-├── src/
-│   ├── layouts/
-│   │   └── Layout.astro
-│   └── pages/
-│       └── index.astro
-└── package.json
+```js
+const currentMusic = {
+  playlist: {},
+  songs: [],
+  song: {},
+};
 ```
 
-To learn more about the folder structure of an Astro project, refer to [our guide on project structure](https://docs.astro.build/en/basics/project-structure/).
+## Custom Hooks
 
-## 🧞 Commands
+### `usePlaylistsFilters`
+Manages filter state for playlists:
+```js
+const { filterPlaylistsBtn, changeFilter } = usePlaylistsFilters();
+```
 
-All commands are run from the root of the project, from a terminal:
+### `useFilterPlaylists`
+Filters playlists based on search input and filter buttons:
+```js
+const { filteredPlaylists } = useFilterPlaylists(myPlaylists, searchPlaylist, filterPlaylistsBtn);
+```
 
-| Command                   | Action                                           |
-| :------------------------ | :----------------------------------------------- |
-| `npm install`             | Installs dependencies                            |
-| `npm run dev`             | Starts local dev server at `localhost:4321`      |
-| `npm run build`           | Build your production site to `./dist/`          |
-| `npm run preview`         | Preview your build locally, before deploying     |
-| `npm run astro ...`       | Run CLI commands like `astro add`, `astro check` |
-| `npm run astro -- --help` | Get help using the Astro CLI                     |
+### `useAsideView`
+Handles the layout style of the playlist display:
+```js
+const { gridColsNumber, listContainerStyle } = useAsideView();
+```
 
-## 👀 Want to learn more?
+## Searching & Filtering
 
-Feel free to check [our documentation](https://docs.astro.build) or jump into our [Discord server](https://astro.build/chat).
+- **Debounced Search**: The main search input applies a debounce mechanism to optimize performance.
+- **Filtering**: Playlists can be filtered by:
+  - All
+  - Created by User
+  - Created by Spotify
+  - Playlists
+  - Albums
+
+## Playlist & Song Management
+
+- **Adding Songs**:
+```js
+const handleAddSongToPlayList = useCallback(async (songId) => {
+    if (playlistSongs.find(s => s.id === songId)) return;
+    await addSongToPlaylist(id, songId);
+    setPlaylistSongs(prev => [...prev, allSongs.find(s => s.id === songId)]);
+}, [playlistSongs, id]);
+```
+
+- **Removing Songs**:
+```js
+const handleRemoveSongFromPlaylist = useCallback(async (songId) => {
+    await removeSongFromPlaylist(id, songId);
+    setPlaylistSongs(prev => prev.filter(s => s.id !== songId));
+}, [playlistSongs, id]);
+```
+
+## Technologies Used
+
+- **Astro** (for building the project)
+- **React** (for interactive components)
+- **Zustand** (for global state management)
+- **Tailwind CSS** (for styling)
+- **TypeScript & JavaScript** (mix of `.tsx` and `.jsx` components)
+
+## Setup & Installation
+
+1. Clone the repository:
+   ```sh
+   git clone https://github.com/KevinU20221275/spotify-clone.git
+   cd spotify-clone
+   ```
+2. Install dependencies:
+   ```sh
+   npm install
+   ```
+3. Start the development server:
+   ```sh
+   npm run dev
+   ```
+
+## Conclusion
+
+This project provides an optimized and structured approach to managing playlists and music playback using modern front-end technologies. Contributions and suggestions are welcome!
+
+## Disclaimer  
+
+This project is a Spotify clone created solely for educational purposes to improve my development skills.  
+The songs and artists displayed in the application may not be real, as some titles were invented and others mixed.  
+
+I do not own any rights to the music content, and this project has no commercial purpose.  
+
+
