@@ -140,6 +140,6 @@ The songs and artists displayed in the application may not be real, as some titl
 
 I do not own any rights to the music content, and this project has no commercial purpose.
 
-You can see the project live at: https://spotify-clone-2562.vercel.app/
+You can see the project live at: https://spotify-clone-kevin-montano.vercel.app/
 
 
