@@ -2,6 +2,7 @@
 import XIcon from "@/icons/X.astro"
 import InstagramIcon from "@/icons/InstagramIcon.astro"
 import FacebookIcon from "@/icons/FacebookIcon.astro"
+import GithubIcon from "@/icons/Github.astro"
 ---
 
 <section class="relative p-10 px-6">
@@ -75,7 +76,7 @@ import FacebookIcon from "@/icons/FacebookIcon.astro"
 
     <div class="h-[1px] bg-zinc-700 w-full"></div>
     
-    <article class="py-10 flex justify-between items-center flex-wrap">
+    <article class="py-10 flex flex-col gap-2">
         <ul class="flex gap-x-4 flex-wrap">
             <li>
                 <a href="#" class="text-zinc-400 hover:text-zinc-100 transition-all text-nowrap text-sm">Legal</a>
@@ -96,6 +97,24 @@ import FacebookIcon from "@/icons/FacebookIcon.astro"
                 <a href="#" class="text-zinc-400 hover:text-zinc-100 transition-all text-nowrap text-sm">Accesibilidad</a>
             </li>
         </ul>
-        <p class="text-zinc-400 text-sm text-nowrap">&copy; Kevin Montano</p>
+        <div class="text-zinc-400 text-sm">
+            <span class="text-red-500">DISCLAIMER</span>
+            <p>
+                This project is a Spotify clone created solely for educational purposes to improve my development skills.   
+            </p>
+            <p>
+                The songs and artists displayed in the application may not be real, as some titles were invented and others mixed.  
+            </p>
+            <p>
+                I do not own any rights to the music content, and this project has no commercial purpose.  
+            </p>
+            <p class="flex gap-2">
+                You can see the proyect in githhub here 
+                <a href="https://github.com/KevinU20221275/spotify-clone" target="_blank" class="hover:text-green-600">
+                    <GithubIcon/>
+                </a>
+            </p>
+            <p>&copy; Kevin Montano </p>
+        </div>
     </article>
 </section>
